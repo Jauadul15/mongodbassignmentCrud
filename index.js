@@ -8,7 +8,8 @@ MongoClient.connect(URl,function (error,MyMongoClient) {
     else{
         console.log("connection Successful");
         //insertData(MyMongoClient);
-        UpdateMyData(MyMongoClient);
+        //UpdateMyData(MyMongoClient);
+        FindAllDataByProjection(MyMongoClient);
     }
 })
 function insertData(MyMongoClient){
@@ -28,7 +29,7 @@ function insertData(MyMongoClient){
 }
 function UpdateMyData(MyMongoClient){
     var MyDataBase=MyMongoClient.db("ostad");
-    var MyCollection=MyDataBase.collection("Students");
+    var MyCollection=MyDataBase.collection("students");
 
     var myquery={Group:"C"};
     var MyNewValues={$set:{Phn:"012333"}};
@@ -38,3 +39,16 @@ function UpdateMyData(MyMongoClient){
     })
 
 }
+function FindAllDataByProjection(MyMongoClient){
+    var MyDataBase=MyMongoClient.db("ostad");
+    var MyCollection=MyDataBase.collection("students");
+    var itemObj={};
+    var ItemProjection={projection:{Phn:"",Name:""}};
+
+    MyCollection.find(itemObj,ItemProjection).toArray(function (error,result) {
+        console.log(result);
+        
+    })
+
+}
+
